@@ -95,4 +95,87 @@ public class QuickSortTest {
         assertEquals(Y, X);
 
     }
+
+    @Test
+    void quickSortRandomSmall(){
+        ArrayList<Integer> X = new ArrayList<>(Arrays.asList(1, 7, 8, 3, 4, 5));
+        ArrayList<Integer> Y = new ArrayList<>(Arrays.asList(1, 7, 8, 3, 4, 5));
+
+        QuickSort.quickSortRandom(X);
+        Collections.sort(Y);
+
+        assertEquals(Y, X);
+    }
+
+    @Test
+    void quickSortRandomMedium(){
+        Random random = new Random();
+        ArrayList<Integer> X = new ArrayList<>(10000);
+        ArrayList<Integer> Y = new ArrayList<>(10000);
+
+        for(int i = 0; i < 10000; i++){
+            Integer insert = random.nextInt();
+            X.add(insert);
+            Y.add(insert);
+        }
+
+
+        long startTime = System.nanoTime();
+        QuickSort.quickSortRandom(X);
+        long endTime = System.nanoTime();
+        System.out.println("Duration of QuickSort Medium: " + (endTime - startTime));
+
+        startTime = System.nanoTime();
+        Collections.sort(Y);
+        endTime = System.nanoTime();
+        System.out.println("Duration of Collections.sort Medium: " + (endTime - startTime));
+
+
+        assertEquals(Y, X);
+
+    }
+
+    @Test
+    void quickSortRandomLarge(){
+        Random random = new Random();
+        ArrayList<Integer> X = new ArrayList<>(1000000);
+        ArrayList<Integer> Y = new ArrayList<>(1000000);
+
+        for(int i = 0; i < 1000000; i++){
+            Integer insert = random.nextInt();
+            X.add(insert);
+            Y.add(insert);
+        }
+
+        long startTime = System.nanoTime();
+        QuickSort.quickSortRandom(X);
+        long endTime = System.nanoTime();
+        System.out.println("Duration of QuickSort Large: " + (endTime - startTime));
+
+        startTime = System.nanoTime();
+        Collections.sort(Y);
+        endTime = System.nanoTime();
+        System.out.println("Duration of Collections.sort Large: " + (endTime - startTime));
+        assertEquals(Y, X);
+
+    }
+
+    @RepeatedTest(30)
+    void quickSortRandomRepeated(){
+        Random random = new Random();
+        ArrayList<Integer> X = new ArrayList<>(1000);
+        ArrayList<Integer> Y = new ArrayList<>(1000);
+
+        for(int i = 0; i < 1000; i++){
+            Integer insert = random.nextInt();
+            X.add(insert);
+            Y.add(insert);
+        }
+
+        QuickSort.quickSortRandom(X);
+        Collections.sort(Y);
+
+        assertEquals(Y, X);
+
+    }
 }

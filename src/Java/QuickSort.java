@@ -1,11 +1,28 @@
 package Java;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class QuickSort {
 
-    private static int partition(ArrayList<Comparable> list, int start, int end){
-        Object selected = list.get(end);
+    static Random rand = new Random();
+
+    private static int partition(ArrayList<Comparable> list, int start, int end, boolean random){
+
+        Comparable selected;
+
+        if(random){
+            int rand_index = rand.nextInt((end - start) + 1) + start;
+            selected = list.get(rand_index);
+
+            //swap last element and randomly selected element to simplify the rest of the quicksort code
+            list.set(rand_index, list.get(end));
+            list.set(end, selected);
+        }
+        else {
+            selected = list.get(end);
+        }
+
         int i = start - 1;
         for(int j = start; j < end; j++){
             if(list.get(j).compareTo(selected) < 0){
@@ -23,16 +40,21 @@ public class QuickSort {
 
     }
 
-    private static void quickSortInternal(ArrayList list, int start, int end){
+    private static void quickSortInternal(ArrayList list, int start, int end, boolean random){
         if(start >= end){
             return;
         }
-        int q = partition(list, start, end);
-        quickSortInternal(list, start, q -1);
-        quickSortInternal(list, q + 1, end);
+
+        int q = partition(list, start, end, random);
+        quickSortInternal(list, start, q -1, random);
+        quickSortInternal(list, q + 1, end, random);
     }
 
     public static void quickSort(ArrayList list) {
-        quickSortInternal(list, 0, list.size() - 1);
+        quickSortInternal(list, 0, list.size() - 1, false);
+    }
+
+    public static void quickSortRandom(ArrayList list){
+        quickSortInternal(list, 0, list.size() - 1, true);
     }
 }
