@@ -10,15 +10,34 @@ public class Heap<T extends Comparable> {
         heapArray = new ArrayList<>();
     }
 
+    public void heapSort(ArrayList<T> list){
+        ArrayList<T> tmpHeap = heapArray;
+        heapArray = new ArrayList<>();
+        int size = list.size();
+
+        for(int i = 0; i < size; i++){
+            insert(list.get(i));
+        }
+
+        list.clear();
+
+        for (int i = 0; i < size; i++){
+            list.add(extractMin());
+        }
+
+        heapArray.clear();
+        heapArray = tmpHeap;
+    }
+
     public void insert(T obj){
         int j = heapArray.size();
         heapArray.add(obj);
 
-        while (heapArray.get(j).compareTo(heapArray.get(j/2)) < 0 && j > 0){
+        while (heapArray.get(j).compareTo(heapArray.get((j - 1)/2)) < 0 && j > 0){
             T tmp = heapArray.get(j);
-            heapArray.set(j, heapArray.get(j/2));
-            heapArray.set(j/2, tmp);
-            j = j/2;
+            heapArray.set(j, heapArray.get((j - 1)/2));
+            heapArray.set((j - 1)/2, tmp);
+            j = (j - 1)/2;
         }
     }
 
@@ -62,15 +81,18 @@ public class Heap<T extends Comparable> {
             }
 
             //if there is a node with a left child and no right child then this will be executed
-            if(leftIndex < heapArray.size() && heapArray.get(leftIndex).compareTo(heapArray.get(j)) < 0){
+            if (leftIndex < heapArray.size() && heapArray.get(leftIndex).compareTo(heapArray.get(j)) < 0){
                 T left = heapArray.get(leftIndex);
                 heapArray.set(2 * j + 1, heapArray.get(j));
                 heapArray.set(j, left);
-                j = 2 * j + 1;
             }
 
             return ret;
         }
+    }
+
+    public int size(){
+        return heapArray.size();
     }
 
     @Override
