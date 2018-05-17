@@ -128,7 +128,7 @@ public class HeapTest {
         ArrayList<Integer> Y = new ArrayList<>(1000);
 
         for(int i = 0; i < 1000; i++){
-            Integer insert = random.nextInt()/1000000;
+            Integer insert = random.nextInt();
             X.add(insert);
             Y.add(insert);
         }
